@@ -14,26 +14,25 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
 
     void Update()
     {
+        Move();
+    }
 
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
-
+    private void Move()
+    {
         var horizontal = Input.GetAxis("Horizontal");
         var vertical = Input.GetAxis("Vertical");
 
         var movement = new Vector3(horizontal, 0, vertical);
-
         animator.SetFloat("Speed", vertical);
 
         transform.Rotate(Vector3.up, horizontal * turnSpeed * Time.deltaTime);
-
-        
-            characterController.SimpleMove(transform.forward * moveSpeed * vertical);
-        
+        characterController.SimpleMove(transform.forward * moveSpeed * vertical);
     }
 }
