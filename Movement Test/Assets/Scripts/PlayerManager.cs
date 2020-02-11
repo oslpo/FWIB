@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
+    
     // this script manages the player stats and stuff
     [Header ("Player Stats")]
     public float maxHealth;   // the total amount of damage the player can take before dying
@@ -95,6 +96,18 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void HealDamage(float amount)
+    {
+        if (curHealth + amount <= maxHealth)
+        {
+            curHealth += amount;
+        }
+        else
+        {
+            curHealth = maxHealth;
+        }
+    }
+
     public void LoseBreath (float amount) //To be called when the player needs to lose a certain amount of breath at once
     {
         if(curBreath - amount > 0)
@@ -107,6 +120,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    
-
+    public void HealBreath (float amount)
+    {
+        if (curBreath + amount <= maxBreath)
+        {
+            curBreath += amount;
+        }
+        else
+        {
+            curBreath = maxBreath;
+        }
+    }
 }
