@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568a9937118254b48840a7c099f6f9bb, type: 3}
   m_Name: Food
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Food
   itemDescription: 
+  itemSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
