@@ -10,10 +10,16 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Inventory System")]
     public InventoryManager inventory;
+    public GameObject inventoryMenu;
+    
+    bool menuOpen;
 
     [Header("Move Stats")]
     public float moveSpeed = 7;
     public float turnSpeed = 150;
+
+    [HideInInspector]
+    public bool canMove = true;
 
     private void Start()
     {
@@ -25,7 +31,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if (canMove)
+        {
+            Move();
+        }
         Controls();
     }
 
@@ -43,12 +52,31 @@ public class PlayerMovement : MonoBehaviour
 
     void Controls()
     {
+        if (Input.GetButtonDown("Inventory"))
+        {
+            if (!menuOpen)
+            {
+                inventoryMenu.SetActive(true);
+                canMove = false;
+                menuOpen = true;
+            }
+            else
+            {
+                inventoryMenu.SetActive(false);
+                canMove = true;
+                menuOpen = false;
+            }
+        }
 
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            inventory.UseQuickInventory(0);
+        }
     }
 
     private void OnTriggerStay(Collider other) //Meant for handling object pick ups
     {
-        if (Input.GetAxisRaw("Interact") != 0)
+        if (Input.GetButtonDown("Interact"))
         {
             switch (other.tag)
             {
