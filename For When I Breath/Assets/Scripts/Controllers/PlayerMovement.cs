@@ -68,6 +68,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if(Input.GetButtonDown("Interact"))
+        {
+            if(menuOpen)
+            {
+                if(inventory.inventoryMenu.active == true)
+                {
+                    inventory.UseItem();
+                }
+            }
+        }
+
         if(Input.GetKeyDown(KeyCode.Z))
         {
             inventory.UseQuickInventory(0);

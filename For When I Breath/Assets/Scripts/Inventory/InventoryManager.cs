@@ -5,40 +5,52 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public List<Item> listOfItems;
-    public List<Item> listOfQuickItems;
-    public int maxListSize;
+    public List<Item> startingItems;
     public int maxQuickListSize;
-    public List<Button> inventorySlots;
-    public List<Button> quickInventorySlots;
+    public List<InventorySlotController> inventorySlots;
+    public List<InventorySlotController> quickInventorySlots;
+    public GameObject inventoryMenu;
     
     int itemsCounter = 0;
     int quickItemCounter = 0;
-
+    int selectedIndex;
     private void Start()
     {
-        for (int i = 0; i < maxListSize; i++)
+        if(startingItems.Count > 0)
         {
-            listOfItems.Add(null);
+            foreach(Item item in startingItems)
+            {
+                AddToList(item);
+            }
         }
-        for(int i = 0; i < maxQuickListSize; i++)
+        inventorySlots[0].SelectSlot(true);
+        selectedIndex = 0;
+    }
+
+    private void Update()
+    {
+        if(inventoryMenu.active == true)
         {
-            listOfQuickItems.Add(null);
+            GetSlotSelection();
         }
+    }
+
+    public void UseItem()
+    {
+        inventorySlots[selectedIndex].Use();
+        RemoveFromList(selectedIndex);
     }
 
     public void AddToList(Item item)
     {
-        if (itemsCounter < maxListSize)
+        if (itemsCounter < inventorySlots.Count)
         {
-            listOfItems[itemsCounter] = item;
-            UpdateInventorySlots();
+            inventorySlots[itemsCounter].SetSlot(item);
             itemsCounter++;
-            if(itemsCounter < 3 && quickItemCounter < 3)
+            if(itemsCounter < 1 && quickItemCounter < 1)
             {
-                listOfQuickItems[quickItemCounter] = item;
+                quickInventorySlots[quickItemCounter].SetSlot(item);
                 quickItemCounter++;
-                UpdateQuickInventorySlots();
             }
      
         }
@@ -50,56 +62,83 @@ public class InventoryManager : MonoBehaviour
 
     public void UseQuickInventory (int index)
     {
-        listOfQuickItems[index].Use();
-        RemoveFromList(listOfItems.IndexOf(listOfQuickItems[index]));
+        quickInventorySlots[index].Use();
+        RemoveFromList(inventorySlots.IndexOf(quickInventorySlots[index]));
         RemoveFromQuickList(index);
     }
 
     void RemoveFromList(int index)
     {
-        listOfItems[index] = null;
-        inventorySlots.RemoveAt(index);
+        inventorySlots[index] = null;
         itemsCounter--;
     }
     void RemoveFromQuickList (int index)
     {
-        listOfQuickItems[index] = null;
-        UpdateQuickInventorySlots();
+        quickInventorySlots[index] = null;
         quickItemCounter--;
     }
-    
-    public void UpdateInventorySlots ()
-    {
-        int counter = 0;
-        if (listOfItems[0] != null)
-        {
-            foreach (Item item in listOfItems)
-            {
-                inventorySlots[counter].GetComponent<InventorySlotController>().SetSlot(item);
-                counter++;
-            }
-        }
-        else
-        {
-            inventorySlots[0].GetComponent<InventorySlotController>().SetSlot(null);
-        }
-    }
 
-    public void UpdateQuickInventorySlots ()
+    void GetSlotSelection()
     {
-        int counter = 0;
-        if (listOfQuickItems[0] != null)
+        if (Input.GetKeyDown(KeyCode.D)) //right
         {
-            foreach (Item item in listOfQuickItems)
+            if (selectedIndex != inventorySlots.Count - 1)
             {
-                quickInventorySlots[counter].GetComponent<InventorySlotController>().SetSlot(item);
-                counter++;
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex += 1;
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
+            else
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex = 0;
+                inventorySlots[selectedIndex].SelectSlot(true);
             }
         }
-        else
+        else if(Input.GetKeyDown(KeyCode.A)) // left
         {
-            quickInventorySlots[0].GetComponent<InventorySlotController>().SetSlot(null);
+            if (selectedIndex != 0)
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex -= 1;
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
+            else
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex = inventorySlots.Count - 1;
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
         }
-        
+        else if (Input.GetKeyDown(KeyCode.S)) // Down
+        {
+            if (selectedIndex < inventorySlots.Count - 2)
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex += 2;
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
+            else
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex = Mathf.Abs(selectedIndex - inventorySlots.Count);
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.W)) // Up
+        {
+            if (selectedIndex > 1)
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex -= 2;
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
+            else
+            {
+                inventorySlots[selectedIndex].SelectSlot(false);
+                selectedIndex = Mathf.Abs(selectedIndex + 4);
+                inventorySlots[selectedIndex].SelectSlot(true);
+            }
+        }
     }
 }

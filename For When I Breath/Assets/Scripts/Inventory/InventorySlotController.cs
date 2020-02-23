@@ -8,17 +8,43 @@ public class InventorySlotController : MonoBehaviour
     public Item item;
     public Text text;
     public Image imageSprite;
+    public bool isSelected;
+    public bool isFull = false;
+
+    Color inActiveColor;
+    Color activeColor = Color.cyan;
 
     private void Start()
     {
         if (item != null)
         {
             SetSlot(item);
+            isFull = true;
         }
+        else
+        {
+            text.text = "";
+            imageSprite.color = Color.clear ;
+        }
+        inActiveColor = this.GetComponent<Image>().color;
     }
     public void Use ()
     {
         Debug.Log("ITEM!!!");
+        item.Use();
+        SetSlot(null);
+    }
+
+    private void FixedUpdate()
+    {
+        if(isSelected)
+        {
+            this.GetComponent<Image>().color = activeColor;
+        }
+        else
+        {
+            this.GetComponent<Image>().color = inActiveColor;
+        }
     }
 
     public void SetSlot (Item newItem)
@@ -28,12 +54,19 @@ public class InventorySlotController : MonoBehaviour
             item = newItem;
             text.text = newItem.itemName;
             imageSprite.sprite = newItem.itemSprite;
+            isFull = true;
         }
         else
         {
             item = null;
             text.text = null;
             imageSprite.sprite = null;
+            isFull = false;
         }
+    }
+
+    public void SelectSlot(bool status)
+    {
+        isSelected = status;
     }
 }
