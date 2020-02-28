@@ -32,6 +32,7 @@ public class InventoryManager : MonoBehaviour
         if(inventoryMenu.active == true)
         {
             GetSlotSelection();
+            AddToQuickFromInv();
         }
     }
 
@@ -43,16 +44,15 @@ public class InventoryManager : MonoBehaviour
 
     public void AddToList(Item item)
     {
-        if (itemsCounter < inventorySlots.Count)
+        if (quickItemCounter < 1)
+        {
+            quickInventorySlots[quickItemCounter].SetSlot(item);
+            quickItemCounter++;
+        }
+        else if (itemsCounter < inventorySlots.Count)
         {
             inventorySlots[itemsCounter].SetSlot(item);
             itemsCounter++;
-            if(itemsCounter < 1 && quickItemCounter < 1)
-            {
-                quickInventorySlots[quickItemCounter].SetSlot(item);
-                quickItemCounter++;
-            }
-     
         }
         else
         {
@@ -63,19 +63,21 @@ public class InventoryManager : MonoBehaviour
     public void UseQuickInventory (int index)
     {
         quickInventorySlots[index].Use();
-        RemoveFromList(inventorySlots.IndexOf(quickInventorySlots[index]));
         RemoveFromQuickList(index);
     }
 
     void RemoveFromList(int index)
     {
-        inventorySlots[index] = null;
+        inventorySlots[index].SetSlot(null);
         itemsCounter--;
     }
     void RemoveFromQuickList (int index)
     {
-        quickInventorySlots[index] = null;
-        quickItemCounter--;
+        if (quickInventorySlots[index] != null)
+        {
+            quickInventorySlots[index].SetSlot(null);
+            quickItemCounter--;
+        }
     }
 
     void GetSlotSelection()
@@ -138,6 +140,29 @@ public class InventoryManager : MonoBehaviour
                 inventorySlots[selectedIndex].SelectSlot(false);
                 selectedIndex = Mathf.Abs(selectedIndex + 4);
                 inventorySlots[selectedIndex].SelectSlot(true);
+            }
+        }
+    }
+
+    void AddToQuickFromInv()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(inventorySlots[selectedIndex].isFull)
+            {
+                if(quickItemCounter < 1)
+                {
+                    AddToList(inventorySlots[selectedIndex].item);
+                    RemoveFromList(selectedIndex);
+                }
+                else
+                {
+                    Item hold = quickInventorySlots[0].item;
+                    RemoveFromQuickList(0);
+                    AddToList(inventorySlots[selectedIndex].item);
+                    inventorySlots[selectedIndex].SetSlot(hold);
+                    return;
+                }
             }
         }
     }

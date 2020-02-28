@@ -54,6 +54,7 @@ public class InventorySlotController : MonoBehaviour
             item = newItem;
             text.text = newItem.itemName;
             imageSprite.sprite = newItem.itemSprite;
+            imageSprite.color = Color.white;
             isFull = true;
         }
         else
@@ -61,6 +62,7 @@ public class InventorySlotController : MonoBehaviour
             item = null;
             text.text = null;
             imageSprite.sprite = null;
+            imageSprite.color = Color.clear;
             isFull = false;
         }
     }
