@@ -11,8 +11,8 @@ public class PlayerManager : MonoBehaviour
     public float maxBreath;   // the total amount of breath the player can have
     public float maxStamina;  // total amount of stamina the player has
     public float curHealth;   //Player's current health
-    float curBreath;          //player's current breath
-    float curStamina;         // player's current stamina
+    public float curBreath;          //player's current breath
+    public float curStamina;         // player's current stamina
 
     [Header ("Asthma Mechanics")]
     public float breathDepletionRate; // the rate the breath bar depletes

@@ -15,17 +15,28 @@ public class PlayerMovement : MonoBehaviour
     bool menuOpen;
 
     [Header("Move Stats")]
-    public float moveSpeed = 7;
+    public float walkSpeed = 7;
+    public float runSpeed = 12;
+    public float crouchSpeed = 3.5f;
     public float turnSpeed = 150;
+
+    [Header("Jump Stuff")]
+    public float jumpSpeed = 8;
+    public float gravity = 20;
+
+    [HideInInspector]
+    public float moveSpeed;
 
     [HideInInspector]
     public bool canMove = true;
+    bool crouched = false;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        moveSpeed = walkSpeed;
     }
 
 
@@ -46,8 +57,18 @@ public class PlayerMovement : MonoBehaviour
         var movement = new Vector3(horizontal, 0, vertical);
         animator.SetFloat("Speed", vertical);
 
+        if(Input.GetButtonDown("Jump"))
+        {
+            Debug.Log("Jump");
+            movement.y = moveSpeed;
+        }
+
+        //gravity
+        movement.y -= gravity * Time.deltaTime;
+
         transform.Rotate(Vector3.up, horizontal * turnSpeed * Time.deltaTime);
-        characterController.SimpleMove(transform.forward * moveSpeed * vertical);
+        characterController.Move(transform.forward * moveSpeed * vertical * Time.deltaTime);
+        //characterController.Move(movement * moveSpeed * Time.deltaTime); //This plays with the controls not being tank controls so maybe?
     }
 
     void Controls()
@@ -82,6 +103,28 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Z))
         {
             inventory.UseQuickInventory(0);
+        }
+
+        if(Input.GetButtonDown("Run"))
+        {
+            moveSpeed = runSpeed;
+        }
+        
+        if(Input.GetButtonUp("Run"))
+        {
+            moveSpeed = walkSpeed;
+        }
+
+        if(Input.GetButtonDown("Crouch"))
+        {
+            moveSpeed = crouchSpeed;
+            crouched = true;
+        }
+        
+        if(Input.GetButtonUp("Crouch"))
+        {
+            moveSpeed = walkSpeed;
+            crouched = false;
         }
     }
 
