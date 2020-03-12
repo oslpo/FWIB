@@ -44,12 +44,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            Move();
+            Movement();
         }
         Controls();
     }
 
-    private void Move()
+    private void Movement()
     {
         var horizontal = Input.GetAxis("Horizontal");
         var vertical = Input.GetAxis("Vertical");
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetButtonDown("Jump"))
         {
             Debug.Log("Jump");
-            movement.y = moveSpeed;
+            movement.y = jumpSpeed;
         }
 
         //gravity
