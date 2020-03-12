@@ -45,7 +45,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 544}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_MinSize: {x: 915, y: 494}
   m_MaxSize: {x: 22010, y: 14044}
   vertical: 0
-  controlID: 127
+  controlID: 187
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 494}
   m_MaxSize: {x: 10004, y: 14044}
   vertical: 1
-  controlID: 59
+  controlID: 82
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 344}
   m_MaxSize: {x: 4004, y: 8044}
   vertical: 1
-  controlID: 128
+  controlID: 130
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -436,9 +436,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f8310000
-      m_LastClickedID: 12792
-      m_ExpandedIDs: 6cfbffff
+      m_SelectedIDs: 844e0000
+      m_LastClickedID: 20100
+      m_ExpandedIDs: badfffff3ae1ffff6cfbfffff83100006c4e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 26.97, y: 1.02, z: -3.21}
     speed: 2
-    m_Value: {x: 26.97, y: 1.02, z: -3.21}
+    m_Value: {x: 292.2528, y: 184, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 8.996142
     speed: 2
-    m_Value: 8.996142
+    m_Value: 1342.2587
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -711,20 +711,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Controllers
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Controllers
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Antwa\Documents\GitHub\FWIB\For When I Breath
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 2}
-    m_SelectedIDs: e22e0000
-    m_LastClickedID: 12002
-    m_ExpandedIDs: 00000000802d0000a62e000036300000ec38000000ca9a3b
+    scrollPos: {x: 0, y: 102}
+    m_SelectedIDs: 82300000
+    m_LastClickedID: 12418
+    m_ExpandedIDs: 00000000802d0000a62e0000102f000036300000ec380000d444000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -871,7 +871,7 @@ MonoBehaviour:
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 100
+  m_LastVerticalScrollValue: 0
 --- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
