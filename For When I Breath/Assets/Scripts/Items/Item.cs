@@ -11,7 +11,9 @@ public class Item : ScriptableObject
     public string itemName;
     public string itemDescription;
     public Sprite itemSprite;
-    
+    [HideInInspector]
+    public GameObject player = GameObject.FindGameObjectWithTag("Player");
+
 
     public static InventoryManager inventory;
     
