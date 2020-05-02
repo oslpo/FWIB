@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] private LayerMask _layerMask;
+    //[SerializeField] private LayerMask _layerMask;
 
     private float _attackRange = 3f;
     private float _rayDistance = 5.0f;
@@ -105,13 +105,6 @@ public class Enemy : MonoBehaviour
         return navHit.position;
     }
 
-    //private bool IsPathBlocked()
-    //{
-    //    Ray ray = new Ray(transform.position, _direction);
-    //    var hitSomething = Physics.RaycastAll(ray, _rayDistance, _layerMask);
-    //    return hitSomething.Any();
-    //}
-
     Quaternion startingAngle = Quaternion.AngleAxis(-90, Vector3.up);
     Quaternion stepAngle = Quaternion.AngleAxis(5, Vector3.up);
 
@@ -125,7 +118,7 @@ public class Enemy : MonoBehaviour
         var angle = transform.rotation * startingAngle;
         var direction = angle * Vector3.forward;
         var pos = transform.position;
-        for (var i = 0; i < 24; i++)
+        for (var i = 0; i < 24; i++) //Line of Sight (vision) ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         {
             if (Physics.Raycast(pos, direction, out hit, aggroRadius))
             {
@@ -148,6 +141,29 @@ public class Enemy : MonoBehaviour
             direction = stepAngle * direction;
         }
 
+        for (var i = 0; i < 75; i++) // Line of Sight (spacial awareness) -----------------------------------------------------------------------------------------------------------------------------------------------------------
+        {
+            if (Physics.Raycast(pos, direction, out hit, 5))
+            {
+                var player = hit.collider.GetComponent<PlayerManager>();
+                if (player != null)
+                {
+                    Debug.DrawRay(pos, direction * hit.distance, Color.red);
+                    Debug.Log("Player!");
+                    return player.transform;
+                }
+                else
+                {
+                    Debug.DrawRay(pos, direction * hit.distance, Color.yellow);
+                }
+            }
+            else
+            {
+                Debug.DrawRay(pos, direction * 5, Color.white);
+            }
+            direction = stepAngle * direction;
+        }
+
         return null;
     }
 
@@ -156,6 +172,8 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, wanderRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, aggro);
     }
 }
 
