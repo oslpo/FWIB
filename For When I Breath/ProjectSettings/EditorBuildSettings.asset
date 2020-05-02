@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Final Build.unity
+    path: Assets/Scenes/For When I Breath/Main Menu.unity
+    guid: 4d03d5b319cc131419ad366290063237
+  - enabled: 1
+    path: Assets/Scenes/For When I Breath/For When I Breath.unity
     guid: 724fac82dc8cec4459357fb5feb98a89
   m_configObjects: {}
